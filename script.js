@@ -4,9 +4,12 @@ let turnText = document.getElementsByClassName("info")[0];
 let winnerText = document.getElementsByClassName("winner-text")[0];
 let isGameOver = false;
 let isWin = false;
-
+let winnerInfo = document.getElementsByClassName("winner-info")[0];
 let turns = 0;
-
+let xMatch = 0;
+let oMatch = 0;
+let drawMatch = 0;
+let stack = []
 const changeTurn = () => {
     return currentTurn === "X" ? "0" : "X"
 }
@@ -29,12 +32,20 @@ const isWinner = () => {
 
         if( (boxText[e[0]].innerText === boxText[e[1]].innerText) && (boxText[e[1]].innerText === boxText[e[2]].innerText) && (boxText[e[0]].innerText !== "")){
             winnerText.innerHTML =  boxText[e[0]].innerText + " Won";
-            console.log(winnerText);
+
+            if(boxText[e[0]].innerText === "X"){
+                xMatch++;
+            }
+            else if(boxText[e[0]].innerText === "0"){
+                oMatch++;
+            }
+            winnerInfo.innerText = `X won = ${xMatch}    O won = ${oMatch}    MatchDraw = ${drawMatch}`
+            // console.log(winnerText);
             winnerText.classList.add("show");
             winnerText.classList.remove("hide");
             turnText.classList.add("hide");
             turnText.classList.remove("show");
-            console.log("i m winner")
+            // console.log("i m winner")
             isGameOver = true;
             isWin = true;
             
@@ -46,6 +57,9 @@ const isWinner = () => {
 
     if (turns == 9) {
         winnerText.innerText = "Match is draw";
+        drawMatch++;
+        winnerInfo.innerText = `X won = ${xMatch}    O won = ${oMatch}    MatchDraw = ${drawMatch}` 
+        drawMatch += 1;
         winnerText.classList.add("show");
         winnerText.classList.remove("hide");
         turnText.classList.add("hide");
@@ -54,12 +68,6 @@ const isWinner = () => {
         isWin = true;
     }  
     
-
-   
-    
-    // boxes.forEach((e)=>{
-    //     e.classList.add("clicked");
-    // })
 }
 
 boxes.forEach((e)=>{
@@ -69,6 +77,8 @@ boxes.forEach((e)=>{
 
             if ( e.classList.contains("clicked") ){
                 e.classList.remove("clicked");
+                // console.log(e.id);
+                stack.push(e.id);
                 turns++;
                 e.innerHTML = `<span class="boxText">${currentTurn}</span>`;
                 // console.log(e.innerHTML);
@@ -77,7 +87,7 @@ boxes.forEach((e)=>{
                 // e.classList.add("clicked"); 
                 // e.classList.add("clicked")
                 if(isWin){
-                    console.log("i m exe")
+                    // console.log("i m exe")
                     winnerText.classList.add("hide");
                     winnerText.classList.remove("show");
                     turnText.classList.add("show");
@@ -87,12 +97,11 @@ boxes.forEach((e)=>{
                 }
             
                 if(!isGameOver){
-            
                     turnText.innerHTML = "Turn for " + currentTurn;
                 }
             
                 isWinner();
-                }
+            }
             
         })
 })
@@ -100,6 +109,11 @@ boxes.forEach((e)=>{
 const reset = () => {
 
         turns = 0;
+
+        boxes.forEach((e) => {
+            e.classList.add("clicked");
+        })
+
         let boxText = document.querySelectorAll(".boxText");
         boxText.forEach((e) => {
             e.innerHTML = "";
@@ -114,3 +128,16 @@ const reset = () => {
 }
 reset();
 
+winnerInfo.innerText = `X won = ${xMatch}    O won = ${oMatch}    MatchDraw = ${drawMatch}`
+
+const undo = () => {
+    if(stack.length <= 0){
+        alert("Pls start game first")
+    }
+    else{
+        
+        let x = document.getElementById(stack.pop())
+        x.innerHTML = '<span class="boxText"></span>'
+       
+    }
+}
