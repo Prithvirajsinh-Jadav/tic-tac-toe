@@ -63,31 +63,37 @@ const isWinner = () => {
 }
 
 boxes.forEach((e)=>{
-        e.addEventListener("click", ()=>{
-            turns++;
-            e.innerHTML = `<span class="boxText">${currentTurn}</span>`;
-            // console.log(e.innerHTML);
-            currentTurn = changeTurn();
+        // e.classList.add("clicked");
+        e.addEventListener("click",()=>{
+            // e.classList.remove("clicked");
+
+            if ( e.classList.contains("clicked") ){
+                e.classList.remove("clicked");
+                turns++;
+                e.innerHTML = `<span class="boxText">${currentTurn}</span>`;
+                // console.log(e.innerHTML);
+                currentTurn = changeTurn();
+                
+                // e.classList.add("clicked"); 
+                // e.classList.add("clicked")
+                if(isWin){
+                    console.log("i m exe")
+                    winnerText.classList.add("hide");
+                    winnerText.classList.remove("show");
+                    turnText.classList.add("show");
+                    turnText.classList.remove("hide");
+                    isWin = false;
             
-            // e.classList.add("clicked"); 
-            // e.classList.add("clicked")
-            if(isWin){
-                console.log("i m exe")
-                winnerText.classList.add("hide");
-                winnerText.classList.remove("show");
-                turnText.classList.add("show");
-                turnText.classList.remove("hide");
-                isWin = false;
-
-            }
-
-            if(!isGameOver){
-
-                turnText.innerHTML = "Turn for " + currentTurn;
-            }
-
-            isWinner();
-           
+                }
+            
+                if(!isGameOver){
+            
+                    turnText.innerHTML = "Turn for " + currentTurn;
+                }
+            
+                isWinner();
+                }
+            
         })
 })
 
@@ -107,3 +113,4 @@ const reset = () => {
         }    
 }
 reset();
+
