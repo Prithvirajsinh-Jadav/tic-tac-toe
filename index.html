@@ -12,7 +12,12 @@
     <div class="heading-container">
         <h1>Welcome to Tic-Tac-Toe</h1>
     </div>
+    
     <div class="main-container">
+        <div class="left-container">
+            <img src="excited.gif" alt="" id="img" class="hw-0">
+            <span class="winner-text hide"></span>
+        </div>
         <div class="container">
             <div id="1" class="box clicked bt-0 bl-0" ><span class="boxText"></span></div>
             <div id="2" class="box clicked bt-0" ><span class="boxText"></span></div>
@@ -24,13 +29,16 @@
             <div id="8" class="box clicked bb-0"><span class="boxText"></span></div>
             <div id="9" class="box clicked bb-0 br-0"><span class="boxText"></span></div>
         </div>
+        <div class="utility-container ">
+            <!-- <span class="winner-text hide"></span> -->
+            <span class="info">Turn for X</span>
+            <span class="winner-info"></span>
+            <div class="btns">
+                <button id="reset" type="reset" onclick="reset()" >Reset</button>
+                <button id="undo"  onclick="undo()" >undo</button>
+            </div>
+        </div>
     </div>
-    <div class="utility-container ">
-        <span class="winner-text hide"></span>
-        <span class="info">Turn for X</span>
-        <span class="winner-info"></span>
-        <button id="reset" type="reset" onclick="reset()" >Reset</button>
-        <button id="undo"  onclick="undo()" >undo</button>
-    </div>
+    
 </body>
 </html>

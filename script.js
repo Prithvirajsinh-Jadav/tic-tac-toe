@@ -9,7 +9,9 @@ let turns = 0;
 let xMatch = 0;
 let oMatch = 0;
 let drawMatch = 0;
-let stack = []
+let stack = [];
+let alpha = document.getElementById("img");
+
 const changeTurn = () => {
     return currentTurn === "X" ? "0" : "X"
 }
@@ -49,6 +51,8 @@ const isWinner = () => {
             isGameOver = true;
             isWin = true;
             
+            alpha.classList.add("hw-100");
+            alpha.classList.remove("hw-0");
             reset();
            
                 
@@ -60,6 +64,8 @@ const isWinner = () => {
         drawMatch++;
         winnerInfo.innerText = `X won = ${xMatch}    O won = ${oMatch}    MatchDraw = ${drawMatch}` 
         drawMatch += 1;
+        // alpha.classList.remove("hw-100");
+        // alpha.classList.add("hw-0");
         winnerText.classList.add("show");
         winnerText.classList.remove("hide");
         turnText.classList.add("hide");
@@ -92,6 +98,8 @@ boxes.forEach((e)=>{
                     winnerText.classList.remove("show");
                     turnText.classList.add("show");
                     turnText.classList.remove("hide");
+                    alpha.classList.remove("hw-100");
+                    alpha.classList.add("hw-0");
                     isWin = false;
             
                 }
@@ -118,6 +126,12 @@ const reset = () => {
         boxText.forEach((e) => {
             e.innerHTML = "";
         })
+
+       
+
+
+        stack = []
+        // stack.clear();
         // winnerText.classList.remove("show");
 
         currentTurn = "X";
@@ -125,6 +139,8 @@ const reset = () => {
         if(!isGameOver){
             turnText.innerHTML = "Turn for " + currentTurn;
         }    
+
+       
 }
 reset();
 
@@ -132,12 +148,24 @@ winnerInfo.innerText = `X won = ${xMatch}    O won = ${oMatch}    MatchDraw = ${
 
 const undo = () => {
     if(stack.length <= 0){
-        alert("Pls start game first")
+        alert("Pls start game first");
+        turns = 0;
     }
     else{
-        
-        let x = document.getElementById(stack.pop())
+        // console.log(stack,stack.length)
+        let x = document.getElementById(stack.pop());
+        // console.log(stack,stack.length);
+        x.classList.add("clicked");
         x.innerHTML = '<span class="boxText"></span>'
+        // reset();
+        turns -= 1;
+        currentTurn = changeTurn();
+
+
+        if(!isGameOver){
+            turnText.innerHTML = "Turn for " + currentTurn;
+        }
+
        
     }
 }
